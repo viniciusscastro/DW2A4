@@ -1,4 +1,8 @@
 const masks = {
+    nome (value){
+        return value
+        .replace(/\b(\w{2})\w+(\w)\b/g, '$1**$2')
+    },
     date (value) {
         return value
           .replace(/\D+/g, '')
@@ -31,6 +35,8 @@ const masks = {
         .replace(/(\d{5})(\d)/, '$1-$2')
         .replace(/(-\d{3})\d+?$/, '$1')
     }
+
+    
 }
 document.querySelectorAll('input').forEach($input => {
     const field = $input.dataset.js
