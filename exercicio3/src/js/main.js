@@ -12,6 +12,7 @@ const masks = {
         .replace(/(\/\d{4})\d+?$/, '$1')
     },
   cpf (value) {
+    validaCPF()
     return value
       .replace(/\D+/g, '')
       .replace(/(\d{3})(\d)/, '$1.$2')
@@ -35,6 +36,12 @@ const masks = {
       .replace(/\D+/g, '')
       .replace(/(\d{5})(\d)/, '$1-$2')
       .replace(/(-\d{3})\d+?$/, '$1')
+  },
+  email (value){
+    
+    validaEmail(value)
+    return value
+    .replace(' ', '')
   }
 }
 
@@ -68,6 +75,20 @@ function validaCPF(){
   }
 }
 
+function validaEmail(email){
+  let usuario = email.substring(0, email.indexOf("@"));
+  let dominio = email.substring(email.indexOf("@")+ 1, email.length);
+
+  if (!((usuario.length >=1)    &&   (dominio.length >=3)      &&    (usuario.search("@")==-1) && 
+     (dominio.search("@")==-1)  &&   (usuario.search(" ")==-1)   &&    (dominio.search(" ")==-1) &&
+     (dominio.search(".")!=-1)  &&   (dominio.indexOf(".") >=1)  &&    (dominio.lastIndexOf(".") < dominio.length - 1))) {
+      document.getElementById('validadorEmail').removeAttribute("hidden")
+  }else{
+    if(!document.getElementById('validadorEmail').hasAttribute("hidden")){
+      document.getElementById('validadorEmail').setAttribute("hidden",true)
+    }
+  }
+}
 
 document.querySelectorAll('input').forEach($input => {
     const field = $input.dataset.js
@@ -77,5 +98,3 @@ document.querySelectorAll('input').forEach($input => {
     }, false)
 
 })
-
-document.getElementById('cpf').addEventListener("input",validaCPF)
