@@ -1,5 +1,0 @@
-const regrasCampos = {
-    cpf (value){
-      
-    }
-  }
